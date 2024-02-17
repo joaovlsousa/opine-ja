@@ -1,9 +1,11 @@
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-
-import { cn } from '@/lib/utils'
 import { ptBR } from '@clerk/localizations'
 import { ClerkProvider } from '@clerk/nextjs'
+import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
+import { Toaster } from 'sonner'
+
+import { cn } from '@/lib/utils'
+import { ThemeProvider } from '@/providers/theme-provider'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -22,8 +24,16 @@ export default function RootLayout({
   return (
     <ClerkProvider localization={ptBR}>
       <html lang="pt-BR">
-        <body className={cn('antialiased bg-background/30', inter.className)}>
-          {children}
+        <body
+          className={cn(
+            'antialiased bg-background/35 dark:bg-background',
+            inter.className,
+          )}
+        >
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <Toaster richColors position="bottom-center" />
+            {children}
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>

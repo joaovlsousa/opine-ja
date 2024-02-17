@@ -1,11 +1,11 @@
-import { UserButton, auth } from '@clerk/nextjs'
+import { UserButton, currentUser } from '@clerk/nextjs'
 
 export default async function HomePage() {
-  const { sessionClaims, userId } = auth()
+  const user = await currentUser()
   return (
     <div>
       <p>home page</p>
-      <p>{JSON.stringify({ sessionClaims, userId })}</p>
+      <p>{JSON.stringify({ user }, null, 2)}</p>
       <UserButton afterSignOutUrl="/" />
     </div>
   )

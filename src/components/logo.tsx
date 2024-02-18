@@ -9,16 +9,24 @@ const font = Poppins({
   weight: ['600'],
 })
 
-interface LogoProps extends ComponentProps<'div'> {}
+interface LogoProps extends ComponentProps<'div'> {
+  showName?: boolean
+}
 
-export function Logo({ className, ...props }: LogoProps) {
+export function Logo({ className, showName, ...props }: LogoProps) {
   return (
     <div
       className={cn('w-full flex items-center gap-x-2', className)}
       {...props}
     >
       <Image src="/logo.svg" height="40" width="40" alt="Logo" />
-      <p className={cn('font-semibold hidden md:block', font.className)}>
+      <p
+        className={cn(
+          'font-semibold hidden md:block',
+          showName && 'block',
+          font.className,
+        )}
+      >
         Opine Já
       </p>
     </div>

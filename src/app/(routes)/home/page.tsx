@@ -1,12 +1,13 @@
-import { UserButton, currentUser } from '@clerk/nextjs'
+import { Description } from '@/components/description'
+import { Title } from '@/components/title'
 
-export default async function HomePage() {
-  const user = await currentUser()
+export default function HomePage() {
   return (
-    <div>
-      <p>home page</p>
-      <p>{JSON.stringify({ user }, null, 2)}</p>
-      <UserButton afterSignOutUrl="/" />
-    </div>
+    <>
+      <header>
+        <Title>Página inicial</Title>
+        <Description>Acompanhe suas últimas interações na página</Description>
+      </header>
+    </>
   )
 }

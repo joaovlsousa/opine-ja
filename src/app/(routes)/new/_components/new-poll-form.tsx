@@ -5,6 +5,7 @@ import axios, { AxiosError } from 'axios'
 import { AlertCircle, Trash } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useFieldArray, useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { Error } from '@/components/error'
@@ -22,7 +23,6 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { cn } from '@/lib/utils'
 import { createPollBody } from '@/schemas'
-import { toast } from 'sonner'
 
 type CreatePollBody = z.infer<typeof createPollBody>
 type CreatePollResponseBody = { pollId: string }
@@ -56,7 +56,6 @@ export function NewPollForm() {
 
   async function onSubmit(data: CreatePollBody) {
     try {
-      console.log(data)
       const res = await axios.post<CreatePollResponseBody>('/api/polls', data)
 
       const { pollId } = res.data
@@ -96,7 +95,7 @@ export function NewPollForm() {
 
           <AlertCircle className="-mr-2 size-3 text-muted-foreground" />
           <span className="text-xs text-muted-foreground">
-            Informe pelo menos 2 opções
+            Mínimo de 2 opções
           </span>
 
           <Button

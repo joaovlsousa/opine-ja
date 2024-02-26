@@ -1,15 +1,12 @@
-import { auth } from '@clerk/nextjs'
 import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 
+import { getUserPolls } from '@/actions/get-user-polls'
 import { PollCard, PollCardSkeleton } from '@/components/cards/poll-card'
 import { Error } from '@/components/error'
 import { Button } from '@/components/ui/button'
-import { getUserPolls } from '@/data/polls'
 
 export async function Polls() {
-  await new Promise((resolve) => setTimeout(resolve, 10000))
-  const { userId } = auth()
   const polls = await getUserPolls()
 
   if (!polls) {
@@ -44,7 +41,7 @@ export async function Polls() {
           options={poll.options}
           title={poll.title}
           votes={poll.votes}
-          isSelfUser={poll.userId === userId}
+          isSelfUser
         />
       ))}
     </div>

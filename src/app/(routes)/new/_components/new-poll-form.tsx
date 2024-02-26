@@ -1,13 +1,13 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import axios, { AxiosError } from 'axios'
 import { AlertCircle, Trash } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
+import { createPoll } from '@/actions/create-poll'
 import { Error } from '@/components/error'
 import { Spinner } from '@/components/spinner'
 import { Title } from '@/components/title'
@@ -25,7 +25,6 @@ import { cn } from '@/lib/utils'
 import { createPollBody } from '@/schemas'
 
 type CreatePollBody = z.infer<typeof createPollBody>
-type CreatePollResponseBody = { pollId: string }
 
 export function NewPollForm() {
   const router = useRouter()
@@ -55,18 +54,16 @@ export function NewPollForm() {
   }
 
   async function onSubmit(data: CreatePollBody) {
-    try {
-      const res = await axios.post<CreatePollResponseBody>('/api/polls', data)
+    const { error, pollId } = await createPoll(data)
 
-      const { pollId } = res.data
+    if (error) {
+      toast.error(error)
+    }
 
+    if (pollId) {
       toast.success('Enquete criada com sucesso')
 
       router.push(`/polls/${pollId}`)
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        toast.error(error.response?.data.error)
-      }
     }
   }
 

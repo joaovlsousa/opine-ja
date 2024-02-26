@@ -1,10 +1,12 @@
 'use client'
 
-import axios, { AxiosError } from 'axios'
 import { Edit, MoreHorizontal, Share2, Trash } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { useTransition } from 'react'
 import { toast } from 'sonner'
 
+import { deletePoll } from '@/actions/delete-poll'
+import { Spinner } from '@/components/spinner'
 import { Button } from '@/components/ui/button'
 import {
   Popover,
@@ -22,18 +24,22 @@ export function PollCardHeaderActions({
   pollId,
 }: PollCardHeaderActionsProps) {
   const router = useRouter()
+  const [isPending, startTransition] = useTransition()
 
-  async function deletePoll() {
-    try {
-      await axios.delete(`/api/polls/${pollId}`)
+  async function handleDeletePoll() {
+    startTransition(async () => {
+      const { error, pollId: pollResponseId } = await deletePoll(pollId)
 
-      toast.success('Enquete excluida com sucesso')
-      router.refresh()
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        toast.error(error.response?.data.error)
+      if (error) {
+        toast.error(error)
       }
-    }
+
+      if (pollResponseId) {
+        toast.success('Enquete excluída com sucesso')
+
+        router.refresh()
+      }
+    })
   }
 
   async function sharePoll() {
@@ -49,16 +55,19 @@ export function PollCardHeaderActions({
       label: 'Compartilhar link',
       icon: Share2,
       onClick: sharePoll,
+      disabled: isPending,
     },
     {
       label: 'Editar enquete',
       icon: Edit,
       onClick: () => router.push(`/polls/${pollId}/edit`),
+      disabled: isPending,
     },
     {
-      label: 'Excluir enquete',
-      icon: Trash,
-      onClick: deletePoll,
+      label: isPending ? 'Excluindo enquete...' : 'Excluir enquete',
+      icon: isPending ? Spinner : Trash,
+      onClick: handleDeletePoll,
+      disabled: isPending,
     },
   ]
 
@@ -90,8 +99,13 @@ export function PollCardHeaderActions({
         align="end"
         className="w-auto flex flex-col items-start gap-y-2 py-2 px-1 border-0 bg-secondary"
       >
-        {actions.map(({ icon: Icon, label, onClick }) => (
-          <Button key={label} variant="ghost" onClick={onClick}>
+        {actions.map(({ icon: Icon, label, onClick, disabled }) => (
+          <Button
+            key={label}
+            variant="ghost"
+            onClick={onClick}
+            disabled={disabled}
+          >
             <Icon className="size-4 mr-2" />
             <span>{label}</span>
           </Button>

@@ -14,3 +14,7 @@ export const createPollBody = z.object({
     )
     .min(2, 'Informe pelo menos 2 opções'),
 })
+
+export const searchPoll = z.object({
+  search: z.string().optional(),
+})

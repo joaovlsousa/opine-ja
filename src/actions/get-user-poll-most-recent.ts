@@ -1,18 +1,12 @@
-import { auth } from '@clerk/nextjs'
-
 import { prisma } from '@/lib/prisma'
 
-export async function getUserPolls() {
+export async function getUserPollMostRecent() {
   try {
-    const { userId } = auth()
-
-    if (!userId) {
-      return null
-    }
-
     const polls = await prisma.poll.findMany({
-      where: { userId },
-      orderBy: { createdAt: 'desc' },
+      take: 1,
+      orderBy: {
+        createdAt: 'desc',
+      },
       include: {
         options: {
           select: {
@@ -34,7 +28,7 @@ export async function getUserPolls() {
       }
     })
 
-    return responsePayload
+    return responsePayload[0]
   } catch (error) {
     return null
   }

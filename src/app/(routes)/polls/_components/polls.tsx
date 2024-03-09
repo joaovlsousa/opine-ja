@@ -2,7 +2,7 @@ import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 
 import { getUserPolls } from '@/actions/get-user-polls'
-import { PollCard, PollCardSkeleton } from '@/components/cards/poll-card'
+import { PollCard } from '@/components/cards/poll-card'
 import { Error } from '@/components/error'
 import { Button } from '@/components/ui/button'
 
@@ -44,16 +44,6 @@ export async function Polls() {
           isSelfUser
         />
       ))}
-    </div>
-  )
-}
-
-export function PollsSkeleton() {
-  return (
-    <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-4">
-      <PollCardSkeleton />
-      <PollCardSkeleton />
-      <PollCardSkeleton />
     </div>
   )
 }

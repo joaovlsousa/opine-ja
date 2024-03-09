@@ -2,6 +2,7 @@ import { Logo } from '@/components/logo'
 
 import { MobileSidebar } from './mobile-sidebar'
 import { NavActions } from './nav-actions'
+import { SearchPoll } from './search-poll'
 
 export function Navbar() {
   return (
@@ -10,6 +11,7 @@ export function Navbar() {
         <MobileSidebar />
         <Logo showName />
       </div>
+      <SearchPoll />
       <div className="flex items-center gap-x-4 md:gap-x-6">
         <NavActions />
       </div>

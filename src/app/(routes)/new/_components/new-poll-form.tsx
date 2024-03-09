@@ -88,7 +88,7 @@ export function NewPollForm() {
         />
 
         <div className="flex items-center gap-x-3">
-          <Title className="text-lg">Opções</Title>
+          <Title variant="sub">Opções</Title>
 
           <AlertCircle className="-mr-2 size-3 text-muted-foreground" />
           <span className="text-xs text-muted-foreground">

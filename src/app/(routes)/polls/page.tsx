@@ -2,7 +2,8 @@ import { Suspense } from 'react'
 
 import { Description } from '@/components/description'
 import { Title } from '@/components/title'
-import { Polls, PollsSkeleton } from './_components/polls'
+import { PollsSkeleton } from '@/components/polls-skeleton'
+import { Polls } from './_components/polls'
 
 export default function PollsPage() {
   return (

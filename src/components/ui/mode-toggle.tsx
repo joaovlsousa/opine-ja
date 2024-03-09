@@ -1,6 +1,6 @@
 'use client'
 
-import { MoonIcon, SunIcon } from '@radix-ui/react-icons'
+import { MobileIcon, MoonIcon, SunIcon } from '@radix-ui/react-icons'
 import { useTheme } from 'next-themes'
 
 import { Button } from '@/components/ui/button'
@@ -8,6 +8,8 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
@@ -24,14 +26,22 @@ export function ModeToggle() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme('light')}>
-          Tema claro
+        <DropdownMenuLabel>Escolher tema</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={() => setTheme('light')} className="gap-x-2">
+          <SunIcon className="size-4 text-amber-500" />
+          Claro
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme('dark')}>
-          Tema Escuro
+        <DropdownMenuItem onClick={() => setTheme('dark')} className="gap-x-2">
+          <MoonIcon className="size-4 text-foreground" />
+          Escuro
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme('system')}>
-          Tema padrão do sistema
+        <DropdownMenuItem
+          onClick={() => setTheme('system')}
+          className="gap-x-2"
+        >
+          <MobileIcon className="size-4 text-sky-500" />
+          Padrão do sistema
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

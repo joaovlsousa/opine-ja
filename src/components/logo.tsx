@@ -1,23 +1,24 @@
 import { Poppins } from 'next/font/google'
 import Image from 'next/image'
+import Link from 'next/link'
 
 import { cn } from '@/lib/utils'
-import { ComponentProps } from 'react'
 
 const font = Poppins({
   subsets: ['latin'],
   weight: ['600'],
 })
 
-interface LogoProps extends ComponentProps<'div'> {
+interface LogoProps {
   showName?: boolean
+  className?: string
 }
 
-export function Logo({ className, showName, ...props }: LogoProps) {
+export function Logo({ className, showName }: LogoProps) {
   return (
-    <div
+    <Link
+      href="/"
       className={cn('w-full flex items-center gap-x-2', className)}
-      {...props}
     >
       <Image src="/logo.svg" height="40" width="40" alt="Logo" />
       <p
@@ -29,6 +30,6 @@ export function Logo({ className, showName, ...props }: LogoProps) {
       >
         Opine Já
       </p>
-    </div>
+    </Link>
   )
 }

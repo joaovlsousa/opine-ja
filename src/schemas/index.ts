@@ -18,3 +18,7 @@ export const createPollBody = z.object({
 export const searchPoll = z.object({
   search: z.string().optional(),
 })
+
+export const voteOnPoll = z.object({
+  pollOptionId: z.string(),
+})

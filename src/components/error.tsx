@@ -1,15 +1,31 @@
-import { AlertCircle } from 'lucide-react'
+import Image from 'next/image'
 import { ComponentProps } from 'react'
 
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { Description } from '@/components/description'
+import { Title } from '@/components/title'
 import { cn } from '@/lib/utils'
 
-export function Error({ children, className }: ComponentProps<'p'>) {
+export function Error({ children, className, ...props }: ComponentProps<'p'>) {
   return (
-    <Alert variant="destructive" className={cn(className)}>
-      <AlertCircle className="size-4" />
-      <AlertTitle className="font-semibold">Erro</AlertTitle>
-      <AlertDescription>{children}</AlertDescription>
-    </Alert>
+    <div className="flex items-start md:px-4">
+      <div
+        className={cn(
+          'flex-1 md:flex-none flex flex-col items-center gap-y-3',
+          className,
+        )}
+      >
+        <Image
+          src="/error.svg"
+          alt="Erro"
+          height={100}
+          width={100}
+          className="aspect-square"
+        />
+        <div className="space-y-1 text-center">
+          <Title variant="sm">Ops! Algo deu errado</Title>
+          <Description {...props}>{children}</Description>
+        </div>
+      </div>
+    </div>
   )
 }

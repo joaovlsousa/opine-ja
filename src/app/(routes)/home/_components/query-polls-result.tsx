@@ -11,7 +11,7 @@ export async function QueryPollResults({ title }: { title: string }) {
   const { error, polls } = await getPollsWithTitle(title)
 
   if (error || !polls) {
-    return <Error className="max-w-2xl">{error}</Error>
+    return <Error>{error}</Error>
   }
 
   return (

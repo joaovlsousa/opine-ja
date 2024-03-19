@@ -1,3 +1,5 @@
+'use server'
+
 import { auth } from '@clerk/nextjs'
 
 import { prisma } from '@/lib/prisma'
@@ -24,7 +26,7 @@ export async function deletePoll(pollId: string): Promise<CreatePollResponse> {
 
     return { error: null, pollId: poll.id }
   } catch (error) {
-    console.log(error)
+    console.log({ error })
     return { error: 'Erro interno do servidor', pollId: null }
   }
 }

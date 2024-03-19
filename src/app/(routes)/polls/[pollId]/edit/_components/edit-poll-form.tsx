@@ -2,12 +2,12 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { AlertCircle, Trash } from 'lucide-react'
-import { useRouter } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
-import { createPoll } from '@/actions/create-poll'
+import { updatePoll } from '@/actions/update-poll'
 import { Error } from '@/components/error'
 import { Spinner } from '@/components/spinner'
 import { Title } from '@/components/title'
@@ -24,14 +24,19 @@ import { Textarea } from '@/components/ui/textarea'
 import { cn } from '@/lib/utils'
 import { createPollBody } from '@/schemas'
 
-type CreatePollBody = z.infer<typeof createPollBody>
+type UpdatePollBody = z.infer<typeof createPollBody>
 
-export function NewPollForm() {
+export function EditPollForm({ options, title }: UpdatePollBody) {
   const router = useRouter()
+  const params = useParams()
 
-  const form = useForm<CreatePollBody>({
+  const form = useForm<UpdatePollBody>({
     resolver: zodResolver(createPollBody),
     mode: 'all',
+    defaultValues: {
+      title,
+      options,
+    },
   })
 
   const {
@@ -53,15 +58,19 @@ export function NewPollForm() {
     remove(index)
   }
 
-  async function onSubmit(data: CreatePollBody) {
-    const { error, pollId } = await createPoll(data)
+  async function onSubmit(data: UpdatePollBody) {
+    const { error, pollId } = await updatePoll({
+      options: data.options,
+      title: data.title,
+      pollId: params.pollId as string,
+    })
 
     if (error) {
       toast.error(error)
     }
 
     if (pollId) {
-      toast.success('Enquete criada com sucesso')
+      toast.success('Enquete atualizada com sucesso')
 
       router.push(`/polls/${pollId}`)
     }
@@ -143,10 +152,10 @@ export function NewPollForm() {
           {isSubmitting && (
             <>
               <Spinner className="mr-2" />
-              <p>Salvando enquete...</p>
+              <p>Atualizando a enquete....</p>
             </>
           )}
-          {!isSubmitting && <p>Salvar enquete</p>}
+          {!isSubmitting && <p>Atualizar enquete</p>}
         </Button>
       </form>
     </Form>

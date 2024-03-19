@@ -32,7 +32,7 @@ export default function HomePage({
 
   return (
     <>
-      <div className="py-6 md:py-0">
+      <div className="pb-6 md:py-0">
         <SearchPoll isMobile />
       </div>
       <main className="space-y-6">

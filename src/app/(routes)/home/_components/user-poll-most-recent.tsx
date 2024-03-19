@@ -10,7 +10,7 @@ export async function UserPollMostRecent() {
   const poll = await getUserPollMostRecent()
 
   if (!poll) {
-    return <Error className="max-w-2xl">Algo deu errado</Error>
+    return <Error>Não foi possível carregar a enquete.</Error>
   }
 
   return (

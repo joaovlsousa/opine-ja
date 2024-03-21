@@ -36,7 +36,7 @@ export async function QueryPollResults({ title }: { title: string }) {
 
 export function QueryPollResultsSkeleton() {
   return (
-    <div className="w-full mt-20 flex justify-center">
+    <div className="w-full h-[calc(100vh-8rem)] flex items-center justify-center">
       <Spinner />
     </div>
   )
